@@ -1,0 +1,64 @@
+{
+  "name": "fh",
+  "runtime": "nodejs",
+  "description": "Serverless Lambda function for project: rpi-events",
+  "customName": false,
+  "customRole": false,
+  "handler": "handler.handler",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [
+    {
+      "path": "slack/slash/fh",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": {
+        "application/json": {
+          "token": "$input.params('token')",
+          "channel_id": "$input.params('channel_id')",
+          "channel_name": "$input.params('channel_name')",
+          "command": "$input.params('command')",
+          "response_url": "$input.params('response_url')",
+          "team_domain": "$input.params('team_domain')",
+          "team_id": "$input.params('team_id')",
+          "text": "$input.params('text')",
+          "user_id": "$input.params('user_id')",
+          "user_name": "$input.params('user_name')"
+        }
+      },
+      "responses": {
+        "400": {
+          "statusCode": "400"
+        },
+        "default": {
+          "statusCode": "200",
+          "responseParameters": {},
+          "responseModels": {},
+          "responseTemplates": {
+            "application/json": ""
+          }
+        }
+      }
+    }
+  ],
+  "events": [],
+  "environment": {
+    "IOT_ENDPOINT": "${endpointAddress}",
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "SLACK_TOKEN": "${fhSlashCommandToken}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
